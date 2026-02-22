@@ -87,7 +87,6 @@ jobs:
             cd /root/workspace/
             rm -rf reading-ui
             tar -xzvf reading-ui.tar.gz
-            mv deploy reading-ui
             cd reading-ui
             docker compose up -d nginx
             docker compose restart nginx
