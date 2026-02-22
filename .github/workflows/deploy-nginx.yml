@@ -40,10 +40,11 @@ jobs:
       - name: 打包构建产物
         run: |
           mkdir -p reading-ui
-          mv ./dist ./reading-ui
-          mv ./conf.d ./reading-ui
+          mv ./dist/ ./reading-ui
+          mv ./conf.d/ ./reading-ui
           mv ./docker-compose.yml ./reading-ui
           tar -czvf reading-ui.tar.gz ./reading-ui
+          ls -al
 
       - name: 上传到服务器
         uses: appleboy/scp-action@v0.1.7
@@ -52,7 +53,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
-          source: "./reading-ui.tar.gz"
+          source: "reading-ui.tar.gz"
           target: "/home"
 
       - name: 部署到服务器
