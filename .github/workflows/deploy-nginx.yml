@@ -14,12 +14,12 @@ on:
 # 需要执行的任务
 jobs:
   # 任务名称 (构建)
-  build:
+  build-deploy:
     # 运行环境
     runs-on: ubuntu-latest
-    # defaults:
-    #   run:
-    #     working-directory: reading-ui # 指定工作目录
+    defaults:
+      run:
+        working-directory: reading-ui # 指定工作目录
 
     # 任务步骤
     steps:
@@ -37,27 +37,11 @@ jobs:
       - name: 构建项目
         run: pnpm build
 
+      - name: 看看
+        run: ls -al
+
       - name: 打包构建产物和nginx配置文件
         run: tar -czvf reading-ui.tar.gz reading-ui/dist reading-ui/nginx.conf
-
-      - name: 上传构建产物
-        uses: actions/upload-artifact@v4
-        with:
-          name: reading-ui # 构建产物被上传后的名称
-          path: reading-ui/dist # 构建产物路径
-
-  # 任务名称 (部署)
-  deploy:
-    # 运行环境
-    runs-on: ubuntu-latest
-
-    # 任务步骤
-    steps:
-      - name: 下载构建产物
-        uses: actions/download-artifact@v4
-        with:
-          name: reading-ui # 与上传时的名称一致
-          path: . # 下载到当前目录
 
       - name: 看看
         run: ls -al
