@@ -41,7 +41,7 @@ jobs:
         run: ls -al
 
       - name: 打包构建产物和nginx配置文件
-        run: tar -czvf reading-ui.tar.gz reading-ui/dist reading-ui/nginx.conf
+        run: tar -czvf reading-ui.tar.gz ./dist ./nginx.conf
 
       - name: 看看
-        run: ls -al
+        run: tar -tvf reading-ui.tar.gz
