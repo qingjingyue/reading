@@ -7,8 +7,8 @@ on:
     branches:
       - main
       - master
-    # paths: # 当指定路径下的文件有变更时触发
-    #   - "reading-ui/**"
+    paths: # 当指定路径下的文件有变更时触发
+      - "reading-ui/**"
   workflow_dispatch: # 手动触发
 
 # 需要执行的任务
