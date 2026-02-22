@@ -31,12 +31,12 @@ jobs:
         with:
           version: 10
 
-      - name: 安装 Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 22
-          cache: "pnpm"
-          cache-dependency-path: "reading-ui/pnpm-lock.yaml"
+      #   - name: 安装 Node.js
+      #     uses: actions/setup-node@v3
+      #     with:
+      #       node-version: 22
+      #       cache: "pnpm"
+      #       cache-dependency-path: "reading-ui/pnpm-lock.yaml"
 
       - name: 安装依赖
         run: pnpm install
@@ -48,4 +48,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: reading-ui # 构建产物被上传后的名称
-          path: ./dist # 构建产物路径
+          path: ./reading-ui/dist # 构建产物路径
