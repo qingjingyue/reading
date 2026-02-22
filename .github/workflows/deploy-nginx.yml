@@ -54,7 +54,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
           source: reading-ui/deploy.tar.gz
-          target: /home/
+          target: /root/workspace/
 
       - name: 部署
         uses: appleboy/ssh-action@v1.0.3
@@ -64,7 +64,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            cd /home/
+            cd /root/workspace/
             rm -rf reading-ui
             tar -xzvf deploy.tar.gz
             mv deploy reading-ui
