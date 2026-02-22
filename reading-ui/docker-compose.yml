@@ -19,4 +19,4 @@ services:
       - reading
 
 networks:
-  reading:
+  reading:  
