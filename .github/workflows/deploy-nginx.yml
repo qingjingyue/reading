@@ -3,48 +3,48 @@ name: Deploy to Nginx
 
 # 触发条件
 on:
-    push: # 当有代码推送到指定分支时触发
-        branches:
-            - main
-            - master
-        paths:
-            - 'reading-ui/**'
-    workflow_dispatch: # 手动触发
+  push: # 当有代码推送到指定分支时触发
+    branches:
+      - main
+      - master
+    paths:
+      - "reading-ui/**"
+  workflow_dispatch: # 手动触发
 
 # 需要执行的任务
 jobs:
-    # 任务名称
-    deploy:
-        # 运行环境
-        runs-on: ubuntu-latest
-        defaults:
-            run:
-                working-directory: reading-ui # 指定工作目录
+  # 任务名称
+  deploy:
+    # 运行环境
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: reading-ui # 指定工作目录
 
-        # 任务步骤
-        steps:
-            - name: 拉取代码
-              uses: actions/checkout@v4
+    # 任务步骤
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
 
-            - name: 安装 pnpm
-              uses: pnpm/action-setup@v3
-              with:
-                  version: 10
+      - name: 安装 pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10
 
-            - name: 安装 Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: 22
-                  cache: 'pnpm'
+      - name: 安装 Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+          cache: "pnpm"
 
-            - name: 安装依赖
-              run: pnpm install
+      - name: 安装依赖
+        run: pnpm install
 
-            - name: 构建项目
-              run: pnpm build
+      - name: 构建项目
+        run: pnpm build
 
-            - name: 上传构建产物
-              uses: actions/upload-artifact@v3
-              with:
-                  name: reading-ui # 构建产物被上传后的名称
-                  path: ./dist # 构建产物路径
+      - name: 上传构建产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: reading-ui # 构建产物被上传后的名称
+          path: ./dist # 构建产物路径
