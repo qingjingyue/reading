@@ -86,7 +86,7 @@ jobs:
           script: |
             cd /root/workspace/
             rm -rf reading-ui
-            tar -xzvf deploy.tar.gz
+            tar -xzvf reading-ui.tar.gz
             mv deploy reading-ui
             cd reading-ui
             docker compose up -d nginx
