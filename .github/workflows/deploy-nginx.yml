@@ -42,9 +42,8 @@ jobs:
           mkdir -p reading-ui
           mv ./dist/ ./reading-ui
           mv ./conf.d/ ./reading-ui
-          mv ./docker-compose.yml ./reading-ui
+          mv ./docker-compose.yaml ./reading-ui
           tar -czvf reading-ui.tar.gz ./reading-ui
-          ls -al
 
       - name: 上传构建产物
         uses: actions/upload-artifact@v4

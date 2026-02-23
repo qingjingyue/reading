@@ -1,0 +1,3 @@
+com.reading.common.autoconfig.WebMvcConfig
+com.reading.common.autoconfig.MybatisPlusConfig
+com.reading.common.autoconfig.MqConfig
