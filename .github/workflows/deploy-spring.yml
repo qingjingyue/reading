@@ -39,8 +39,7 @@ jobs:
       - name: 下载依赖
         run: |
           cd reading-server
-          mvn dependency:resolve -B
-          mvn dependency:resolve-plugins -B
+          mvn clean compile
 
       - name: 构建项目
         run: |
