@@ -21,7 +21,7 @@ spring:
   # mysql配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${reading.mysql.host}/${reading.mysql.database}?useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://${reading.mysql.host}/${reading.mysql.database}?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&characterEncoding=utf-8
     username: ${reading.mysql.username}
     password: ${reading.mysql.password}
   data:
