@@ -1,3 +1,5 @@
+use reading;
+
 create table if not exists user
 (
     id          bigint auto_increment primary key comment '用户ID',

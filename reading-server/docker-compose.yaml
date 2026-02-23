@@ -43,6 +43,7 @@ services:
         environment:
             - TZ=Asia/Shanghai
             - MYSQL_ROOT_PASSWORD=123456
+            - MYSQL_DATABASE=reading # 初次启动创建的数据库名称
         command:
             - '--default-time-zone=+08:00'
         volumes:

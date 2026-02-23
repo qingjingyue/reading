@@ -3,99 +3,99 @@ name: Deploy SpringBoot
 
 # 触发条件
 on:
-  push: # 当有代码推送到指定分支时触发
-    branches:
-      - main
-      - master
-    paths: # 当指定路径下的文件有变更时触发
-      - "reading-server/**"
-  workflow_dispatch: # 允许手动触发
+    push: # 当有代码推送到指定分支时触发
+        branches:
+            - main
+            - master
+        paths: # 当指定路径下的文件有变更时触发
+            - 'reading-server/**'
+    workflow_dispatch: # 允许手动触发
 
 # 设置权限
 permissions:
-  # 只需要读取代码库的权限
-  contents: read
+    # 只需要读取代码库的权限
+    contents: read
 
 # 需要执行的任务
 jobs:
-  # 任务名称 (构建)
-  build:
-    # 运行环境
-    runs-on: ubuntu-latest
+    # 任务名称 (构建)
+    build:
+        # 运行环境
+        runs-on: ubuntu-latest
 
-    # 任务步骤
-    steps:
-      - name: 拉取代码
-        uses: actions/checkout@v6
+        # 任务步骤
+        steps:
+            - name: 拉取代码
+              uses: actions/checkout@v6
 
-      - name: 安装 Java 和 Maven
-        uses: actions/setup-java@v5
-        with:
-          distribution: "temurin"
-          java-version: "21"
-          cache: "maven"
-          cache-dependency-path: "reading-server/pom.xml"
+            - name: 安装 Java 和 Maven
+              uses: actions/setup-java@v5
+              with:
+                  distribution: 'temurin'
+                  java-version: '21'
+                  cache: 'maven'
+                  cache-dependency-path: 'reading-server/pom.xml'
 
-      - name: 下载依赖
-        run: |
-          cd reading-server
-          mvn clean compile
+            - name: 下载依赖
+              run: |
+                  cd reading-server
+                  mvn compile
 
-      - name: 构建项目
-        run: |
-          cd reading-server
-          mvn clean package -DskipTests
+            - name: 构建项目
+              run: |
+                  cd reading-server
+                  mvn clean package -DskipTests
 
-      - name: 打包构建产物
-        run: |
-          cd reading-server
-          mv server/target/*.jar reading-server.jar
-          mkdir -p reading-server
-          mv reading-server.jar reading-server/
-          mv sql/ reading-server/
-          mv docker-compose.yaml reading-server/
-          tar -czvf reading-server.tar.gz ./reading-server
+            - name: 打包构建产物
+              run: |
+                  cd reading-server
+                  mv server/target/*.jar reading-server.jar
+                  mkdir -p reading-server
+                  mv reading-server.jar reading-server/
+                  mv sql/ reading-server/
+                  mv docker-compose.yaml reading-server/
+                  tar -czvf reading-server.tar.gz ./reading-server
 
-      - name: 上传构建产物
-        uses: actions/upload-artifact@v6
-        with:
-          name: reading-server # 构建产物被上传后的名称
-          path: ./reading-server/reading-server.tar.gz # 构建产物路径
+            - name: 上传构建产物
+              uses: actions/upload-artifact@v6
+              with:
+                  name: reading-server # 构建产物被上传后的名称
+                  path: ./reading-server/reading-server.tar.gz # 构建产物路径
 
-  # 任务名称 (部署)
-  deploy:
-    # 运行环境
-    runs-on: ubuntu-latest
-    needs: build # 依赖构建任务
+    # 任务名称 (部署)
+    deploy:
+        # 运行环境
+        runs-on: ubuntu-latest
+        needs: build # 依赖构建任务
 
-    # 任务步骤
-    steps:
-      - name: 下载构建产物
-        uses: actions/download-artifact@v6
-        with:
-          name: reading-server # 与上传时的名称一致
-          path: . # 下载到指定目录
+        # 任务步骤
+        steps:
+            - name: 下载构建产物
+              uses: actions/download-artifact@v6
+              with:
+                  name: reading-server # 与上传时的名称一致
+                  path: . # 下载到指定目录
 
-      - name: 上传到服务器
-        uses: appleboy/scp-action@v1.0.0
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          port: ${{ secrets.SERVER_PORT }}
-          username: ${{ secrets.SERVER_USER }}
-          password: ${{ secrets.SERVER_PASSWORD }}
-          source: reading-server.tar.gz
-          target: /root/workspace/
+            - name: 上传到服务器
+              uses: appleboy/scp-action@v1.0.0
+              with:
+                  host: ${{ secrets.SERVER_IP }}
+                  port: ${{ secrets.SERVER_PORT }}
+                  username: ${{ secrets.SERVER_USER }}
+                  password: ${{ secrets.SERVER_PASSWORD }}
+                  source: reading-server.tar.gz
+                  target: /root/workspace/
 
-      - name: 部署
-        uses: appleboy/ssh-action@v1.2.5
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          port: ${{ secrets.SERVER_PORT }}
-          username: ${{ secrets.SERVER_USER }}
-          password: ${{ secrets.SERVER_PASSWORD }}
-          script: |
-            cd /root/workspace/
-            tar -xzvf reading-server.tar.gz
-            cd reading-server
-            docker compose up -d app
-            docker compose restart app
+            - name: 部署
+              uses: appleboy/ssh-action@v1.2.5
+              with:
+                  host: ${{ secrets.SERVER_IP }}
+                  port: ${{ secrets.SERVER_PORT }}
+                  username: ${{ secrets.SERVER_USER }}
+                  password: ${{ secrets.SERVER_PASSWORD }}
+                  script: |
+                      cd /root/workspace/
+                      tar -xzvf reading-server.tar.gz
+                      cd reading-server
+                      docker compose up -d app
+                      docker compose restart app

@@ -16,19 +16,19 @@ spring:
   # mysql配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/reading?useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://reading-mysql:3306/reading?useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
   data:
     # redis配置
     redis:
-      host: localhost
+      host: reading-redis
       password: 123456
       port: 6379
       database: 0
   # rabbitmq配置
   rabbitmq:
-    host: localhost
+    host: reading-rabbitmq
     port: 5672
     virtual-host: /reading-rabbitmq
     username: rabbitmq
