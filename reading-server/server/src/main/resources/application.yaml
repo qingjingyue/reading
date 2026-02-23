@@ -13,6 +13,8 @@ server:
 
 # spring配置
 spring:
+  application:
+    name: reading
   # 环境配置
   profiles:
     active: dev
@@ -39,7 +41,7 @@ spring:
 # mybatis-plus配置
 mybatis-plus:
   # xml映射文件路径
-  mapper-locations: classpath:mapper/**/*.xml
+  mapper-locations: classpath*:mapper/**/*.xml
   # 类型别名包
   type-aliases-package: com.reading.domain.po
   configuration:
@@ -52,41 +54,23 @@ mybatis-plus:
       # 主键策略, 自动递增
       id-type: auto
 
-# springdoc-openapi项目配置
-springdoc:
-  # 设置默认分组
-  swagger-ui:
-    # 文档路径
-    path: /swagger-ui.html
-    # 如果需要对接口进行排序
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    path: /v3/api-docs
-  # 扫描路径
-  packages-to-scan: com.reading.server.controller
 # knife4j的增强配置，不需要增强可以不配
 knife4j:
   # 开启增强
   enable: true
-  # 生产环境关闭
-  production: false
-  # 开启Basic认证（可选）
-  basic:
-    enable: false
-    username: admin
-    password: 123456
+  # 当前是否是生产环境
+  production: ${reading.knife4j.production}
   setting:
-    # 语言
-    language: zh_cn
+    language: zh_cn # 语言
 
+# 日志配置
 logging:
-  # 日志级别
-  level:
-    root: info
-  # 日志目录位置
-  file:
-    path: /logs
+  level: # 日志级别
+    com.reading: debug
+  file: # 日志目录位置
+    path: logs
+  pattern: # 日期格式
+    dateformat: yyyy-MM-dd HH:mm:ss
 
 # 项目配置
 reading:

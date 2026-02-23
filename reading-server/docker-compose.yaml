@@ -5,90 +5,89 @@ name: reading
 
 # 需要的服务
 services:
-    # 应用服务
-    app:
-        image: eclipse-temurin:21-jre-jammy
-        container_name: reading-app
-        ports:
-            - '8080:8080'
-        environment:
-            - TZ=Asia/Shanghai
-            - JAVA_OPTS="-Xmx512m -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+  # 应用服务
+  app:
+    image: eclipse-temurin:21-jre-jammy
+    container_name: reading-app
+    ports:
+      - '8080:8080'
+    environment:
+      - TZ=Asia/Shanghai
+      - JAVA_OPTS="-Xmx512m -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
 
-        volumes:
-            - ./reading-server.jar:/app/reading-server.jar:ro
-            - ./logs:/app/logs
+    volumes:
+      - ./reading-server.jar:/app/reading-server.jar:ro
+      - ./logs:/app/logs
 
-        command: java -jar /app/reading-server.jar --spring.profiles.active=prod
+    command: java -jar /app/reading-server.jar --spring.profiles.active=prod
 
-        deploy: # 资源限制（生产环境必配）
-            resources:
-                limits:
-                    memory: 768M # 限制最大内存
-                reservations:
-                    memory: 256M # 保留最小内存
-        depends_on:
-            - mysql
-            - redis
-            - rabbitmq
-        networks:
-            - reading
+    deploy: # 资源限制（生产环境必配）
+      resources:
+        limits:
+          memory: 768M # 限制最大内存
+        reservations:
+          memory: 256M # 保留最小内存
+    depends_on:
+      - mysql
+      - redis
+      - rabbitmq
+    networks:
+      - reading
 
-    # mysql数据库
-    mysql:
-        image: mysql:8.0
-        container_name: reading-mysql
-        ports:
-            - '3306:3306'
-        environment:
-            - TZ=Asia/Shanghai
-            - MYSQL_ROOT_PASSWORD=123456
-        command:
-            - '--default-time-zone=+08:00'
-        volumes:
-            - mysql-data:/var/lib/mysql # 挂载mysql数据目录
-            - ./sql:/docker-entrypoint-initdb.d # 挂载mysql初始化脚本目录
-        networks:
-            - reading
+  # mysql数据库
+  mysql:
+    image: mysql:8.0
+    container_name: reading-mysql
+    ports:
+      - '3306:3306'
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=123456
+    command:
+      - '--default-time-zone=+08:00'
+    volumes:
+      - mysql-data:/var/lib/mysql # 挂载mysql数据目录
+      - ./sql:/docker-entrypoint-initdb.d # 挂载mysql初始化脚本目录
+    networks:
+      - reading
 
-    # redis缓存
-    redis:
-        image: redis:8.0
-        container_name: reading-redis
-        ports:
-            - '6379:6379'
-        environment:
-            - TZ=Asia/Shanghai
-        command: redis-server --requirepass 123456
-        volumes:
-            - redis-data:/data # 挂载redis数据目录
-        networks:
-            - reading
+  # redis缓存
+  redis:
+    image: redis:8.0
+    container_name: reading-redis
+    ports:
+      - '6379:6379'
+    environment:
+      - TZ=Asia/Shanghai
+    command: redis-server --requirepass 123456
+    volumes:
+      - redis-data:/data # 挂载redis数据目录
+    networks:
+      - reading
 
-    # 消息队列
-    rabbitmq:
-        image: rabbitmq:3.8-management
-        container_name: reading-rabbitmq
-        hostname: reading-rabbitmq # 该容器的主机名
-        ports:
-            - '5672:5672' # mq端口,用于收发消息
-            - '15672:15672' # web控制台页面
-        environment:
-            - TZ=Asia/Shanghai
-            - RABBITMQ_DEFAULT_VHOST=/
-            - RABBITMQ_DEFAULT_USER=rabbitmq
-            - RABBITMQ_DEFAULT_PASS=rabbitmq
-        volumes:
-            - rabbitmq_data:/var/lib/rabbitmq # 挂载rabbitmq数据目录
-            - rabbitmq-plugin:/plugins # 挂载rabbitmq插件目录
-        networks:
-            - reading
+  # 消息队列
+  rabbitmq:
+    image: rabbitmq:3.8-management
+    container_name: reading-rabbitmq
+    hostname: reading-rabbitmq # 该容器的主机名
+    ports:
+      - '5672:5672' # mq端口,用于收发消息
+      - '15672:15672' # web控制台页面
+    environment:
+      - TZ=Asia/Shanghai
+      - RABBITMQ_DEFAULT_USER=rabbitmq
+      - RABBITMQ_DEFAULT_PASS=rabbitmq
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq # 挂载rabbitmq数据目录
+      - rabbitmq-plugin:/plugins # 挂载rabbitmq插件目录
+    networks:
+      - reading
 
 volumes:
-    mysql-data:
-    redis-data:
-    rabbitmq_data:
-    rabbitmq-plugin:
+  mysql-data:
+  redis-data:
+  rabbitmq-data:
+  rabbitmq-plugin:
 
 networks:
-    reading:
+  reading:
