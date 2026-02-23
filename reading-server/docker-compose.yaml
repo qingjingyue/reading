@@ -19,7 +19,7 @@ services:
       - ./reading-server.jar:/app/reading-server.jar:ro
       - ./logs:/app/logs
 
-    command: java -jar /app/reading-server.jar --spring.profiles.active=prod
+    command: cd /app && java -jar reading-server.jar --spring.profiles.active=prod
 
     deploy: # 资源限制（生产环境必配）
       resources:
