@@ -14,12 +14,11 @@ services:
     environment:
       - TZ=Asia/Shanghai
       - JAVA_OPTS="-Xmx512m -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
-
     volumes:
-      - ./reading-server.jar:/app/reading-server.jar:ro
+      - ./reading-server.jar:/app/app.jar:ro
       - ./logs:/app/logs
-
-    command: cd /app && java -jar reading-server.jar --spring.profiles.active=prod
+    working_dir: /app   # 指定工作目录
+    command: java -jar app.jar --spring.profiles.active=prod
 
     deploy: # 资源限制（生产环境必配）
       resources:
