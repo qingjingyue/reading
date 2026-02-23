@@ -1,0 +1,15 @@
+reading:
+    mysql:
+        host: reading-mysql
+        database: reading
+        username: root
+        password: 123456
+    redis:
+        host: reading-redis
+        password: 123456
+        port: 6379
+    rabbitmq:
+        host: reading-rabbitmq
+        port: 5672
+        username: rabbitmq
+        password: rabbitmq

@@ -19,7 +19,7 @@ services:
             - ./reading-server.jar:/app/reading-server.jar:ro
             - ./logs:/app/logs
 
-        command: java -jar /app/reading-server.jar
+        command: java -jar /app/reading-server.jar --spring.profiles.active=prod
 
         deploy: # 资源限制（生产环境必配）
             resources:
@@ -43,7 +43,6 @@ services:
         environment:
             - TZ=Asia/Shanghai
             - MYSQL_ROOT_PASSWORD=123456
-            - MYSQL_DATABASE=reading # 初次启动创建的数据库名称
         command:
             - '--default-time-zone=+08:00'
         volumes:
@@ -76,7 +75,6 @@ services:
             - '15672:15672' # web控制台页面
         environment:
             - TZ=Asia/Shanghai
-            - RABBITMQ_DEFAULT_VHOST=/reading-rabbitmq # rabbitmq的默认虚拟主机
             - RABBITMQ_DEFAULT_USER=rabbitmq
             - RABBITMQ_DEFAULT_PASS=rabbitmq
         volumes:

@@ -13,26 +13,27 @@ server:
 
 # spring配置
 spring:
+  # 环境配置
+  profiles:
+    active: dev
   # mysql配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://reading-mysql:3306/reading?useSSL=false&serverTimezone=Asia/Shanghai
-    username: root
-    password: 123456
+    url: jdbc:mysql://${reading.mysql.host}/${reading.mysql.database}?useSSL=false&serverTimezone=Asia/Shanghai
+    username: ${reading.mysql.username}
+    password: ${reading.mysql.password}
   data:
     # redis配置
     redis:
-      host: reading-redis
-      password: 123456
-      port: 6379
-      database: 0
+      host: ${reading.redis.host}
+      password: ${reading.redis.password}
+      port: ${reading.redis.port}
   # rabbitmq配置
   rabbitmq:
-    host: reading-rabbitmq
-    port: 5672
-    virtual-host: /reading-rabbitmq
-    username: rabbitmq
-    password: rabbitmq
+    host: ${reading.rabbitmq.host}
+    port: ${reading.rabbitmq.port}
+    username: ${reading.rabbitmq.username}
+    password: ${reading.rabbitmq.password}
 
 # mybatis-plus配置
 mybatis-plus:
@@ -77,6 +78,14 @@ knife4j:
   setting:
     # 语言
     language: zh_cn
+
+logging:
+  # 日志级别
+  level:
+    root: info
+  # 日志目录位置
+  file:
+    path: /logs
 
 # 项目配置
 reading:
