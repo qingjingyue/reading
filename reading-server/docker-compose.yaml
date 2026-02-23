@@ -75,6 +75,7 @@ services:
             - '15672:15672' # web控制台页面
         environment:
             - TZ=Asia/Shanghai
+            - RABBITMQ_DEFAULT_VHOST=/
             - RABBITMQ_DEFAULT_USER=rabbitmq
             - RABBITMQ_DEFAULT_PASS=rabbitmq
         volumes:
