@@ -4,10 +4,10 @@ reading:
     production: true
   mysql:
     host: reading-mysql
-    password: ${MYSQL_PASSWORD:123456}
+    password: ${MYSQL_PASSWORD}
   redis:
     host: reading-redis
-    password: ${REDIS_PASSWORD:123456}
+    password: ${REDIS_PASSWORD}
   rabbitmq:
     host: reading-rabbitmq
-    password: ${RABBITMQ_PASSWORD:123456}
+    password: ${RABBITMQ_PASSWORD}
