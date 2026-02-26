@@ -1,0 +1,45 @@
+package com.reading.server.controller;
+
+
+import com.reading.common.result.Result;
+import com.reading.domain.dto.EmailLoginDTO;
+import com.reading.domain.dto.PhoneLoginDTO;
+import com.reading.domain.vo.UserInfoVO;
+import com.reading.server.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+
+@Tag(name = "用户模块")
+@Slf4j
+@RestController
+@RequestMapping("/user")
+@RequiredArgsConstructor
+public class UserController {
+
+    private final UserService userService;
+
+    @Operation(summary = "手机号验证码登录")
+    @PostMapping("/login/phone")
+    public Result<UserInfoVO> loginByPhone(@Valid @RequestBody PhoneLoginDTO phoneLoginDTO) {
+        UserInfoVO userInfoVO = userService.loginByPhone(phoneLoginDTO);
+        return Result.success(userInfoVO);
+    }
+
+    @Operation(summary = "获取验证码")
+    @GetMapping("/login/code")
+    public Result<Void> getVerifyCode(@RequestParam("type") String type, @RequestParam("value") String value) {
+        userService.sendVerifyCode(type, value);
+        return Result.success();
+    }
+
+    @Operation(summary = "邮箱验证码登录")
+    @PostMapping("/login/email")
+    public Result<UserInfoVO> loginByEmail(@Valid @RequestBody EmailLoginDTO emailLoginDTO) {
+        UserInfoVO userInfoVO = userService.loginByEmail(emailLoginDTO);
+        return Result.success(userInfoVO);
+    }
+}

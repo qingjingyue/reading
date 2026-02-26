@@ -1,3 +1,4 @@
 com.reading.common.autoconfig.WebMvcConfig
 com.reading.common.autoconfig.MybatisPlusConfig
 com.reading.common.autoconfig.MqConfig
+com.reading.common.autoconfig.AliYunConfig
