@@ -2,7 +2,7 @@ version: '3.8'
 
 # volumes,networks 的 前缀
 name: reading
-  
+
 # 需要的服务
 services:
     # 应用服务
