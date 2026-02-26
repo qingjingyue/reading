@@ -21,7 +21,6 @@ import static com.reading.common.constants.MqConstant.Exchange.USER_EXCHANGE;
 import static com.reading.common.constants.MqConstant.Key.USER_EMAIL_CODE_KEY;
 import static com.reading.common.constants.MqConstant.Key.USER_PHONE_CODE_KEY;
 
-
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
@@ -100,7 +99,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             // 不存在则创建用户
             user = new User();
             user.setEmail(emailLoginDTO.getEmail());
-            user.setUsername(emailLoginDTO.getEmail().substring(0, user.getUsername().indexOf("@")));
+            user.setUsername(emailLoginDTO.getEmail().substring(0, emailLoginDTO.getEmail().indexOf("@")));
             save(user);
         }
         // 生成JWT令牌
