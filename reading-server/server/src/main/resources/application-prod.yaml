@@ -1,13 +1,13 @@
 # 生产环境配置
 reading:
-    knife4j: # 关闭knife4j
-        production: true
-    mysql:
-        host: reading-mysql
-        password: ${MYSQL_PASSWORD:-123456}
-    redis:
-        host: reading-redis
-        password: ${REDIS_PASSWORD:-123456}
-    rabbitmq:
-        host: reading-rabbitmq
-        password: ${RABBITMQ_PASSWORD:-123456}
+  knife4j: # 关闭knife4j
+    production: true
+  mysql:
+    host: reading-mysql
+    password: ${MYSQL_PASSWORD:123456}
+  redis:
+    host: reading-redis
+    password: ${REDIS_PASSWORD:123456}
+  rabbitmq:
+    host: reading-rabbitmq
+    password: ${RABBITMQ_PASSWORD:123456}
