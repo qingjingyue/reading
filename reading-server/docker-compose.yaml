@@ -15,7 +15,7 @@ services:
             - TZ=Asia/Shanghai
             - JAVA_OPTS="-Xmx512m -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
         volumes:
-            - ./reading.jar:/app/app.jar:ro
+            - ./reading-server.jar:/app/app.jar:ro
             - ./logs:/app/logs
         working_dir: /app # 指定工作目录
         command: java -jar app.jar --spring.profiles.active=prod
