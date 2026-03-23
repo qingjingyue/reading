@@ -57,7 +57,7 @@ jobs:
                   tar -czvf reading-server.tar.gz ./reading-server
 
             - name: 上传构建产物
-              uses: actions/upload-artifact@v6
+              uses: actions/upload-artifact@v4
               with:
                   name: reading-server # 构建产物被上传后的名称
                   path: ./reading-server/reading-server.tar.gz # 构建产物路径
@@ -72,7 +72,7 @@ jobs:
         # 任务步骤
         steps:
             - name: 下载构建产物
-              uses: actions/download-artifact@v6
+              uses: actions/download-artifact@v4
               with:
                   name: reading-server # 与上传时的名称一致
                   path: /home/zx/reading # 下载到指定目录

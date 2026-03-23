@@ -197,7 +197,7 @@ const getEmailCode = async () => {
 	<div class="login-tabs">
 		<el-row>
 			<el-col :span="4">
-				<p style="font-size: 24px; font-weight: bold; margin-bottom: 20px">登录</p>
+				<p style="font-size: 24px; font-weight: bold; margin-bottom: 20px">登录111</p>
 			</el-col>
 		</el-row>
 
