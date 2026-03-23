@@ -61,7 +61,8 @@ jobs:
     # 任务名称 (部署)
     deploy:
         # 运行环境
-        runs-on: ubuntu-latest
+        # runs-on: ubuntu-latest
+        runs-on: self-hosted
         # 依赖任务
         needs: build
 
@@ -71,29 +72,38 @@ jobs:
               uses: actions/download-artifact@v6
               with:
                   name: reading-web
-                  path: .
-
-            - name: 上传到服务器
-              uses: appleboy/scp-action@v1.0.0
-              with:
-                  host: ${{ secrets.SERVER_IP }}
-                  port: ${{ secrets.SERVER_PORT }}
-                  username: ${{ secrets.SERVER_USER }}
-                  password: ${{ secrets.SERVER_PASSWORD }}
-                  source: reading-web.tar.gz
-                  target: /root/workspace/
-
+                  path: /home/zx/reading
+            
             - name: 部署
-              uses: appleboy/ssh-action@v1.2.5
-              with:
-                  host: ${{ secrets.SERVER_IP }}
-                  port: ${{ secrets.SERVER_PORT }}
-                  username: ${{ secrets.SERVER_USER }}
-                  password: ${{ secrets.SERVER_PASSWORD }}
-                  script: |
-                      cd /root/workspace/
-                      rm -rf reading-web/dist
-                      tar -xzvf reading-web.tar.gz
-                      cd reading-web
-                      docker compose up -d nginx
-                      docker compose restart nginx
+              run: |
+                cd /home/zx/reading
+                rm -rf reading-web/dist
+                tar -xzvf reading-web.tar.gz
+                cd reading-web
+                docker compose up -d nginx
+                docker compose restart nginx
+
+            # - name: 上传到服务器
+            #   uses: appleboy/scp-action@v1.0.0
+            #   with:
+            #       host: ${{ secrets.SERVER_IP }}
+            #       port: ${{ secrets.SERVER_PORT }}
+            #       username: ${{ secrets.SERVER_USER }}
+            #       password: ${{ secrets.SERVER_PASSWORD }}
+            #       source: reading-web.tar.gz
+            #       target: /root/workspace/
+
+            # - name: 部署
+            #   uses: appleboy/ssh-action@v1.2.5
+            #   with:
+            #       host: ${{ secrets.SERVER_IP }}
+            #       port: ${{ secrets.SERVER_PORT }}
+            #       username: ${{ secrets.SERVER_USER }}
+            #       password: ${{ secrets.SERVER_PASSWORD }}
+            #       script: |
+            #           cd /root/workspace/
+            #           rm -rf reading-web/dist
+            #           tar -xzvf reading-web.tar.gz
+            #           cd reading-web
+            #           docker compose up -d nginx
+            #           docker compose restart nginx
