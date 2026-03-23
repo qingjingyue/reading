@@ -53,7 +53,7 @@ jobs:
                   tar -czvf reading-web.tar.gz ./reading-web
 
             - name: 上传构建产物
-              uses: actions/upload-artifact@v6
+              uses: actions/upload-artifact@v4
               with:
                   name: reading-web # 构建产物被上传后的名称
                   path: ./reading-web/reading-web.tar.gz # 构建产物路径
@@ -69,7 +69,7 @@ jobs:
         # 任务步骤
         steps:
             - name: 下载构建产物
-              uses: actions/download-artifact@v6
+              uses: actions/download-artifact@v4
               with:
                   name: reading-web
                   path: /home/zx/reading
