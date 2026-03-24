@@ -54,6 +54,7 @@ jobs:
                   mv reading-server.jar reading-server/
                   mv sql/ reading-server/
                   mv docker-compose.yaml reading-server/
+                  ls -l
                   tar -czvf reading-server.tar.gz ./reading-server
 
             - name: 上传构建产物

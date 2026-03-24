@@ -50,6 +50,7 @@ jobs:
                   mv ./dist/ ./reading-web
                   mv ./conf.d/ ./reading-web
                   mv ./docker-compose.yaml ./reading-web
+                  ls -l
                   tar -czvf reading-web.tar.gz ./reading-web
 
             - name: 上传构建产物
